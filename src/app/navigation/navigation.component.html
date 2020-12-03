@@ -1,0 +1,65 @@
+<header>
+
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <mdb-navbar-brand>
+      <a href="https://www.utpl.edu.ec/">
+        <img src="https://www.utpl.edu.ec/sites/all/themes/utpl/logo.png"
+             class="navbar-brand" style="height: 4vh" alt="logo"></a>
+    </mdb-navbar-brand>
+    <links>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Inicio
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#services" data-offset="90">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#invent" data-offset="30">Inventario</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="users" data-offset="90">Usuarios</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle class="nav-link dropdown-toggle waves-light" type="button" mdbWavesEffect>
+            <mdb-icon fas icon="user-circle" class="light-green-text-2"></mdb-icon>
+            {{auth.getUserInfo(auth.getToken()).displayName}}<span class="caret"></span>
+          </a>
+          <div *dropdownMenu class="dropdown dropdown-menu dropdown-primary" role="menu">
+
+            <a class="dropdown-item" (click)="auth.revokeToken()" mdbWavesEffect>Cerrar Sesión</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pr-0" href="https://github.com/Javier6F26" target="_blank">
+            <mdb-icon fab icon="github" class="light-green-text-2"></mdb-icon>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pl-0" href="https://www.instagram.com/javier6f26/" target="_blank">
+            <mdb-icon fab icon="instagram" class="light-green-text-2"></mdb-icon>
+          </a>
+        </li>
+      </ul>
+    </links>
+  </mdb-navbar>
+
+  <!-- Full Page Intro -->
+  <div id="intro-section" class="view">
+
+    <video class="video-intro" poster="https://mdbootstrap.com/img/Photos/Others/background.jpg" playsinline autoplay
+           muted loop>
+      <source src="https://mdbootstrap.com/img/video/animation.mp4" type="video/mp4">
+    </video>
+    <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</header>
+
+

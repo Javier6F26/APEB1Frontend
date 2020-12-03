@@ -1,0 +1,181 @@
+<header>
+
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <mdb-navbar-brand>
+      <a target="_blank" href="https://www.utpl.edu.ec/">
+        <img src="https://www.utpl.edu.ec/sites/all/themes/utpl/logo.png"
+             class="navbar-brand" style="height: 4vh" alt="logo"></a>
+    </mdb-navbar-brand>
+    <links>
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="aboutModal.show()" mdbWavesEffect data-offset="90">Acerca de</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/Javier6F26" target="_blank">
+            <mdb-icon fab icon="github" class="light-green-text-2"></mdb-icon>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.instagram.com/javier6f26/" target="_blank">
+            <mdb-icon fab icon="instagram" class="light-green-text-2"></mdb-icon>
+          </a>
+        </li>
+      </ul>
+    </links>
+  </mdb-navbar>
+
+  <div id="intro-section" class="view">
+
+    <video class="video-intro" poster="https://mdbootstrap.com/img/Photos/Others/background.jpg" playsinline autoplay
+           muted loop>
+      <source src="https://mdbootstrap.com/img/video/animation.mp4" type="video/mp4">
+    </video>
+
+    <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+
+      <div class="container">
+        <div class="row ">
+          <div class="col-md-6 mb-5 mt-md-0 mt-5 white-text text-center text-md-left wow fadeInLeft"
+               data-wow-delay="0.3s">
+            <h1 class="display-4 font-weight-bold"> Tarea 2</h1>
+            <h1 class=" font-weight-bold">[APEB1-20%]</h1>
+            <hr class="hr-light">
+            <h6 class="mb-3">Implementar mecanismos de seguridad y utilización de algoritmos de encriptación en un
+              sistema pequeño.</h6>
+            <button mdbBtn color="white" outline="true" mdbWavesEffect>
+              <mdb-icon class="mr-1" fab icon="github"></mdb-icon>
+              Ver código
+            </button>
+          </div>
+          <div class="col-md-6 col-xl-5 mb-4 pt-lg-5 mt-lg-4 pl-lg-5">
+
+            <button size="lg" mdbBtn color="deep-purple" [block]="true"
+                    (click)="auth.signInVerificationToken=null; signinModal.show()"
+                    mdbWavesEffect>
+              <mdb-icon fas icon="shield-alt"></mdb-icon>
+              Iniciar Sesion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div mdbModal #aboutModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+     aria-labelledby="myBasicModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-md modal-full-height modal-right" role="document">
+
+    <div class="modal-content">
+
+      <div class="modal-header deep-purple">
+        <h5 class="heading text-white font-weight-bold mt-3">Creado por:</h5>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="col-12 mb-lg-0 mb-5">
+          <div class="avatar mx-auto">
+            <img
+              src="https://avatars3.githubusercontent.com/u/22228101?s=460&u=42039e775d3a52e16bd301df14ec8d0abd3e5f4c&v=4"
+              class="rounded-circle z-depth-1" style="width: 20vw"
+              alt="Sample avatar">
+          </div>
+          <h5 class="font-weight-bold mt-4 mb-3">Javier Sánchez</h5>
+          <p class="text-uppercase blue-text">
+            <strong>FullStack Developer</strong>
+          </p>
+          <p class="grey-text">Estudiante UTPL
+            <br>Desarrollo de Software en: C, C++, C#, Dart, Swift, Java, Javascript,Typescript, PHP, NodeJS.
+            <br>Frameworks: Flutter, Angular 11+, React, Express, Laravel.</p>
+          <ul class="list-unstyled mb-0">
+
+            <a target="_blank" class="p-2 fa-lg tw-ic" href="https://github.com/Javier6F26">
+              <mdb-icon fab icon="github" class="blue-text"></mdb-icon>
+            </a>
+            <a target="_blank" class="p-2 fa-lg ins-ic" href="https://www.instagram.com/javier6f26/">
+              <mdb-icon fab icon="instagram" class="blue-text"></mdb-icon>
+            </a>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center waves-effect" mdbWavesEffect>
+        <a type="button" mdbBtn color="deep-purple" href="https://github.com/Javier6F26">Ver en GitHub
+          <mdb-icon class="ml-1" fab icon="github"></mdb-icon>
+        </a>
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect
+           (click)="aboutModal.hide()"
+           data-dismiss="modal">No, thanks</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div mdbModal #signinModal class="modal fade top" id="frameModalSignin" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog cascading-modal modal-avatar modal-md p-4" role="document">
+    <div class="modal-content mt-5 p-3">
+      <div class="modal-header">
+        <img
+          [src]="(auth.getUserInfo(auth.signInVerificationToken))?
+          auth.getUserInfo(auth.signInVerificationToken).photoUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTVl1FYFsRH7ezNbbP8_KL5GHIbud6s1VhRA&usqp=CAU'"
+          alt="avatar"
+          class="rounded-circle img-responsive">
+      </div>
+
+      <div class="modal-body mb-1 px-4">
+        <h5
+          class="mt-1 mb-2 text-center">{{(auth.getUserInfo(auth.signInVerificationToken)) ? auth.getUserInfo(auth.signInVerificationToken).displayName : 'Iniciar Sesión'}}</h5>
+        <form [formGroup]="formGroup">
+          <div *ngIf="!auth.signInVerificationToken" class="md-form">
+            <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>
+            <input type="text" id="form3" class="form-control" formControlName="userName" mdbInput>
+            <label for="form3">Nombre de Usuario</label>
+          </div>
+          <div *ngIf="auth.signInVerificationToken" class="md-form">
+            <mdb-icon fas icon="fingerprint" class="prefix grey-text"></mdb-icon>
+            <input type="number" id="form2" class="form-control" formControlName="password" mdbInput>
+            <label for="form2">Código de verificación </label>
+          </div>
+          <div class="text-center">
+
+            <p *ngIf="auth.signInVerificationToken"> Se ha enviado el código al
+              <u>+{{auth.getUserInfo(auth.signInVerificationToken).phoneNumber}}</u>
+              <br> El código cadudará en {{auth.timeout}}
+              segundo(s)</p>
+            <p *ngIf="!auth.signInVerificationToken"> Se enviara un código de verificación a su número registrado
+            </p>
+          </div>
+        </form>
+        <hr>
+        <div class="text-center mt-4">
+
+          <button *ngIf="!auth.signInVerificationToken" mdbBtn color="cyan" rounded="true" class="mt-1 waves-light"
+                  (click)="login()"
+                  mdbWavesEffect>Iniciar Sesion
+            <mdb-icon fas icon="sign-in-alt" class="ml-1"></mdb-icon>
+          </button>
+          <button *ngIf="auth.signInVerificationToken" mdbBtn color="cyan" rounded="true" class="mt-1 waves-light"
+                  (click)="verification()"
+                  mdbWavesEffect>Verificar
+          </button>
+          <br>
+          <button mdbBtn color="link" *ngIf="auth.signInVerificationToken" class="text-black-50 " type="button"
+                  (click)="auth.resend()"
+                  mdbWavesEffect>
+            Reenviar Codigo
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

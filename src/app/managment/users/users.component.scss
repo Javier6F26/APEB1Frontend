@@ -1,0 +1,21 @@
+.box {
+  z-index:1000;
+  margin:auto;
+}
+.box:after {
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  background: rgba(16, 15, 15, 0.7);
+  z-index:999;
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1001;
+}

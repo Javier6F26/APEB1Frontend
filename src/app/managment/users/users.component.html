@@ -1,0 +1,215 @@
+<div [ngClass]="(loading)?'box':'d-none'">
+  <div class="inner-box">
+    <div class="d-flex justify-content-center vertical-center">
+      <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row pt-lg-5 mt-5">
+    <div class="col-12 mb-5 mt-md-0 pt-5 mt-5"
+         data-wow-delay="0.3s">
+      <mdb-card style="width: 80vw; ">
+        <mdb-card-header>
+          <div class="container d-flex justify-content-between">
+            <h3 class="mt-3 font-weight-bold text-black-50">Usuarios</h3>
+            <button [disabled]="!auth.getPermScope().users.create" mdbBtn color="success" mdbWavesEffect
+                    (click)="setUser(null);manageUserModal.show()">
+              <mdb-icon class="mr-1" fas icon="plus"></mdb-icon>
+              Agregar
+            </button>
+          </div>
+        </mdb-card-header>
+        <mdb-card-body style="overflow: auto; width: 80vw;  height: 80vh">
+          <div class="row">
+            <div *ngFor="let userNGX of users" class="col-12 col-md-6 col-lg-4 mb-4">
+
+              <mdb-card>
+                <div
+                  style="background-image: url('https://besthqwallpapers.com/Uploads/13-10-2016/9086/thumb2-google-abstract-background-4k-original-material.jpg'); background-size: cover"
+                  class="view rgba-white-slight waves-light py-4 pl-5" mdbWavesEffect>
+
+                  <img style="height: 16vh;width: 16vh"
+                       [src]="(userNGX.photoUrl)?userNGX.photoUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTVl1FYFsRH7ezNbbP8_KL5GHIbud6s1VhRA&usqp=CAU'"
+                       alt="profile"
+                       class="img-fluid rounded-circle hoverable">
+
+                  <a>
+                    <div class="mask"></div>
+                  </a>
+                </div>
+                <mdb-card-body>
+                  <mdb-card-title>
+                    <h5>
+                      <mdb-icon class="mr-1" fas icon="user"></mdb-icon>
+                      {{userNGX.displayName}}</h5>
+                  </mdb-card-title>
+                  <mdb-card-text>
+                    <h6>
+                      <mdb-icon class="mr-1" fas icon="mobile"></mdb-icon>
+                      {{'+' + userNGX.phoneNumber}}</h6>
+                    <h6>
+                      <mdb-icon class="mr-1" fas icon="address-card"></mdb-icon>
+                      {{userNGX.userName}}</h6>
+                    <h6>
+                      <mdb-icon class="mr-1" fas icon="envelope"></mdb-icon>
+                      {{userNGX.email}}</h6>
+
+                  </mdb-card-text>
+                  <hr>
+                  <div class="d-flex justify-content-end">
+                    <button mdbBtn color="primary" mdbWavesEffect (click)="setUser(userNGX);manageUserModal.show()">
+
+                      <mdb-icon fas class="mr-1" icon="user-edit"></mdb-icon>
+                      Editar
+                    </button>
+                  </div>
+                </mdb-card-body>
+              </mdb-card>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>
+<div mdbModal #manageUserModal class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="setUser(null);manageUserModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <form [formGroup]="formGroup">
+          <div class="row">
+            <div class="col-6">
+              <div class="md-form mb-5">
+                <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>
+                <input type="text" id="userName" formControlName="userName" class="form-control"
+                       mdbInput mdbValidate>
+                <label for="userName">Nombre de Usuario</label>
+                <mdb-error
+                  *ngIf="getFormControl('userName').invalid && (getFormControl('userName').dirty || getFormControl('userName').touched)">
+                  Requerido
+                </mdb-error>
+              </div>
+              <div class="md-form mb-5">
+                <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon>
+                <input type="email" id="email" formControlName="email" class="form-control"
+                       mdbInput mdbValidate>
+                <label for="email">Correo Electrónico</label>
+                <mdb-error
+                  *ngIf="getFormControl('email').invalid && (getFormControl('email').dirty || getFormControl('email').touched)">
+                  Requerido
+                </mdb-error>
+              </div>
+              <div class="md-form mb-5">
+                <mdb-icon fas icon="mobile" class="prefix grey-text"></mdb-icon>
+                <input type="number" id="phoneNumber" formControlName="phoneNumber" class="form-control"
+                       mdbInput mdbValidate>
+                <label for="phoneNumber">Número Telefónico</label>
+                <mdb-error
+                  *ngIf="getFormControl('phoneNumber').invalid && (getFormControl('phoneNumber').dirty || getFormControl('phoneNumber').touched)">
+                  Requerido
+                </mdb-error>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="md-form mb-5">
+                <mdb-icon fas icon="address-card" class="prefix grey-text"></mdb-icon>
+                <input type="text" id="displayName" formControlName="displayName" class="form-control"
+                       mdbInput mdbValidate>
+                <label for="displayName">Nombre Completo</label>
+                <mdb-error
+                  *ngIf="getFormControl('displayName').invalid && (getFormControl('displayName').dirty || getFormControl('displayName').touched)">
+                  Requerido
+                </mdb-error>
+              </div>
+
+              <div class="md-form mb-5">
+                <mdb-icon fas icon="image" class="prefix grey-text"></mdb-icon>
+                <input type="text" id="photoUrl" formControlName="photoUrl" class="form-control"
+                       mdbInput mdbValidate>
+                <label for="photoUrl">Avatar</label>
+              </div>
+              <div class="md-form mb-5">
+                <mdb-icon fas icon="user-clock" class="prefix grey-text"></mdb-icon>
+                <input type="text" id="lastSignIn" formControlName="lastSignIn" class="form-control"
+                       mdbInput mdbValidate>
+                <label for="lastSignIn">Ultimo Inicio de Sesión</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <form [formGroup]="permFormGroup">
+
+                <table mdbTable [striped]="true" [small]="true">
+                  <thead class="bg-primary text-white">
+                  <tr>
+                    <td>Módulo</td>
+                    <td>Permisos</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>Usuarios</td>
+                    <td formGroupName="users">
+
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="list">Leer</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="create">Crear</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="modify">Editar</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="delete">Eliminar</mdb-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Inventarios</td>
+                    <td formGroupName="invent">
+
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="list">Leer</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="create">Crear</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="modify">Editar</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="delete">Eliminar</mdb-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Servicios</td>
+                    <td formGroupName="services">
+
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="list">Leer</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="create">Crear</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="modify">Editar</mdb-checkbox>
+                      <mdb-checkbox [inline]="true" [default]="true" formControlName="delete">Eliminar</mdb-checkbox>
+                    </td>
+                  </tr>
+                  </tbody>
+
+                </table>
+              </form>
+
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button [disabled]="!user" mdbBtn color="danger" class="waves-light" mdbWavesEffect
+                (click)="deleteUser();manageUserModal.hide()">
+          Eliminar Usuario
+        </button>
+        <button mdbBtn color="default" class="waves-light" mdbWavesEffect (click)="save(manageUserModal);">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
