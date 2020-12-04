@@ -1,7 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {SocketService} from "../../socket.service";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {PermCRUD, PermMatrix, User} from "../../interfaces";
+import {
+  accountingPerMatrix,
+  adminPerMatrix,
+  operatorPerMatrix,
+  PermCRUD,
+  PermMatrix,
+  secretaryPerMatrix,
+  User
+} from "../../interfaces";
 import {ToastrService} from "ngx-toastr";
 import {AuthService} from "../../auth.service";
 import {ModalDirective} from "angular-bootstrap-md";
@@ -28,8 +36,7 @@ export class UsersComponent implements OnInit {
     this.socketService.IO.on('errorEventListener', error => {
       if (error.message)
         this.toast.error(error.message)
-
-      this.get_users()
+      this.loading = false
     })
   }
 
@@ -55,9 +62,46 @@ export class UsersComponent implements OnInit {
     this.setPermFormGroup();
   }
 
+  setRolePerMatrix(value: string) {
+    switch (value) {
+      case 'Administrador':
+        this.permFormGroup = new FormGroup({
+          users: this.getFormPermCRUD(adminPerMatrix.users),
+          invent: this.getFormPermCRUD(adminPerMatrix.invent),
+          services: this.getFormPermCRUD(adminPerMatrix.services),
+          role: new FormControl(value, [Validators.required]),
+        })
+        break
+      case 'Contabilidad':
+        this.permFormGroup = new FormGroup({
+          users: this.getFormPermCRUD(accountingPerMatrix.users),
+          invent: this.getFormPermCRUD(accountingPerMatrix.invent),
+          services: this.getFormPermCRUD(accountingPerMatrix.services),
+          role: new FormControl(value, [Validators.required]),
+        })
+        break
+      case 'Operador':
+        this.permFormGroup = new FormGroup({
+          users: this.getFormPermCRUD(operatorPerMatrix.users),
+          invent: this.getFormPermCRUD(operatorPerMatrix.invent),
+          services: this.getFormPermCRUD(operatorPerMatrix.services),
+          role: new FormControl(value, [Validators.required]),
+        })
+        break
+      case 'secretary':
+        this.permFormGroup = new FormGroup({
+          users: this.getFormPermCRUD(secretaryPerMatrix.users),
+          invent: this.getFormPermCRUD(secretaryPerMatrix.invent),
+          services: this.getFormPermCRUD(secretaryPerMatrix.services),
+          role: new FormControl(value, [Validators.required]),
+        })
+        break
+
+    }
+  }
+
   setFormGroup() {
     if (this.user) {
-      console.log('update')
       const formGroup = new FormGroup({
         userName: new FormControl(this.user.userName, [Validators.required]),
         displayName: new FormControl(this.user.displayName, [Validators.required]),
@@ -70,7 +114,6 @@ export class UsersComponent implements OnInit {
       formGroup.get('lastSignIn').disable()
       this.formGroup = formGroup;
     } else {
-      console.log('no update')
       const formGroup = new FormGroup({
         userName: new FormControl('', [Validators.required]),
         displayName: new FormControl('', [Validators.required]),
@@ -92,18 +135,21 @@ export class UsersComponent implements OnInit {
           users: this.getFormPermCRUD(this.user.permScope.users),
           invent: this.getFormPermCRUD(this.user.permScope.invent),
           services: this.getFormPermCRUD(this.user.permScope.services),
+          role: new FormControl(this.user.role, [Validators.required]),
         })
       } else
         this.permFormGroup = new FormGroup({
           users: this.getFormPermCRUD(null),
           invent: this.getFormPermCRUD(null),
           services: this.getFormPermCRUD(null),
+          role: new FormControl('', [Validators.required]),
         })
     } else {
       this.permFormGroup = new FormGroup({
         users: this.getFormPermCRUD(null),
         invent: this.getFormPermCRUD(null),
         services: this.getFormPermCRUD(null),
+        role: new FormControl('', [Validators.required]),
       })
     }
   }
@@ -160,6 +206,7 @@ export class UsersComponent implements OnInit {
       if (!user) user = {}
       user.userName = this.formGroup.get('userName').value.trim().toLowerCase();
       user.permScope = perms;
+      user.role = this.permFormGroup.get('role').value;
       user.displayName = this.formGroup.get('displayName').value;
       user.email = this.formGroup.get('email').value;
       user.phoneNumber = this.formGroup.get('phoneNumber').value;

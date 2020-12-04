@@ -65,7 +65,6 @@ export class AuthService {
       return this.http.post<{ verificationCode: number, verified?: boolean, token: string }>('http://localhost:45001/resendVerificationCode', {
         token: this.signInVerificationToken
       }).subscribe(next => {
-        console.log(next)
         if (!next.verified)
           alert('El codigo ha caducado')
 

@@ -1,6 +1,7 @@
 # APEB1FE
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.12.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.3.
+by Javier E. Sánchez Fernández UTPL 2020
 
 ## Development server
 
