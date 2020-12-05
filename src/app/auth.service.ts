@@ -4,6 +4,7 @@ import {User} from "./interfaces";
 import {StorageService} from "./storage.service";
 import jwt_decode from "jwt-decode"
 import {Router} from "@angular/router";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AuthService {
 
   login(userName: string) {
     userName = userName.trim().toLowerCase()
-    return this.http.post<{ verified: boolean, verificationCode: number, token: string }>('http://localhost:45001/login', {userName}).subscribe(next => {
+    return this.http.post<{ verified: boolean, verificationCode: number, token: string }>(environment.host + '/login', {userName}).subscribe(next => {
       if (!next.verified)
         alert('Usuario no encontrado')
 
@@ -31,7 +32,7 @@ export class AuthService {
       if (next.verificationCode)
         setTimeout(() => {
 
-          alert(next.verificationCode)
+          alert('El código de verificacion es  ' + next.verificationCode + ' Para propósito de prueba. (Este código deberá ser enviado a una API de SMS y al teléfono registrado del usuario) ')
         }, 100)
 
     })
@@ -39,7 +40,7 @@ export class AuthService {
 
 
   verification(verificationCode: string) {
-    return this.http.post<{ invalid?: boolean, verified?: boolean, token: string }>('http://localhost:45001/verification', {
+    return this.http.post<{ invalid?: boolean, verified?: boolean, token: string }>(environment.host + '/verification', {
       verificationCode,
       token: this.signInVerificationToken
     }).subscribe(next => {
@@ -62,7 +63,7 @@ export class AuthService {
 
   resend() {
     if (this.signInVerificationToken)
-      return this.http.post<{ verificationCode: number, verified?: boolean, token: string }>('http://localhost:45001/resendVerificationCode', {
+      return this.http.post<{ verificationCode: number, verified?: boolean, token: string }>(environment.host + '/resendVerificationCode', {
         token: this.signInVerificationToken
       }).subscribe(next => {
         if (!next.verified)
@@ -81,7 +82,7 @@ export class AuthService {
   authenticate() {
     const token = this.getToken()
     if (token)
-      this.http.post<User>('http://localhost:45001/authenticate', {token}).subscribe(next => {
+      this.http.post<User>(environment.host + '/authenticate', {token}).subscribe(next => {
         if (next.authenticated) {
           this.setToken(next.token)
         } else {

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {StorageService} from "./storage.service";
 import {Socket} from "ngx-socket-io";
-import {observable, Observable, of} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthService} from "./auth.service";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class SocketService {
   }
 
   connect() {
-    this.IO = new Socket({url: 'http://localhost:45001', options: {query: {token: this.auth.getToken()}}})
+    this.IO = new Socket({url: environment.host, options: {query: {token: this.auth.getToken()}}})
     this.IO.on('connect', () => {
       console.log('Conectado al Servidor')
     });
