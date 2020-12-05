@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  host: 'http://localhost:45001'
-
+  //host: 'http://localhost:45001'
+  host: 'https://app-server.pro:45001'
 };
 
 /*
